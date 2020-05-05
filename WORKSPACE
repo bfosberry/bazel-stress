@@ -1,13 +1,31 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+workspace(name = "my_ruby_project")
 
-http_archive(
-    patches = ["//third_party:rules_ruby.patch"],
-    name = "com_github_yugui_rules_ruby",
-    sha256 = "868f7f7ff48af995ca5197a981baef717315e44b2ca0d52f01c2ccf50f3b9f33",
-    strip_prefix = "rules_ruby-7771813c532e51367e25f9b3928822aad06d2183",
-    url = "https://github.com/yugui/rules_ruby/archive/7771813c532e51367e25f9b3928822aad06d2183.zip",
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+#———————————————————————————————————————————————————————————————————————
+# To get the latest ruby rules, grab the 'develop' branch.
+#———————————————————————————————————————————————————————————————————————
+
+git_repository(
+    name = "bazelruby_rules_ruby",
+    remote = "https://github.com/bazelruby/rules_ruby.git",
+    branch = "develop"
 )
 
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_register_toolchains")
+load(
+    "@bazelruby_rules_ruby//ruby:deps.bzl",
+    "rules_ruby_dependencies",
+    "rules_ruby_select_sdk",
+)
 
-ruby_register_toolchains()
+rules_ruby_dependencies()
+
+#———————————————————————————————————————————————————————————————————————
+# Specify Ruby version — this will either build Ruby or use a local
+# RBENV installation if the Ruby version matches.
+#———————————————————————————————————————————————————————————————————————
+
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+bazel_skylib_workspace()
+
+rules_ruby_select_sdk(version = "2.7.0")

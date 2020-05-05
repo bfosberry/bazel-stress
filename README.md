@@ -5,7 +5,7 @@ their position in the overall organization of the build graph.
 
 To generate:
 
-bazel run tools:gen [shamt] [desired_targets] > BUILD
+bazel run tools:gen [shamt] [desired_targets] > BUILD.bazel
 
 *shamt* is a power-of-2 degree of the linear noise generated. The higher
 the *shamt*, the more levels to the graph.

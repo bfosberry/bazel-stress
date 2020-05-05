@@ -1,4 +1,8 @@
-load("@com_github_yugui_rules_ruby//ruby:def.bzl", "ruby_binary")
+load(
+    "@bazelruby_rules_ruby//ruby:defs.bzl",
+    "ruby_binary",
+    "ruby_library",
+)
 
 cc_binary(
   name = "ex",
@@ -12,3 +16,4 @@ ruby_binary(
   visibility = ["//visibility:public"],
   data = ["package.erb", "target.erb"],
 )
+

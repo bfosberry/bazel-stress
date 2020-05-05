@@ -147,7 +147,7 @@ end
 levels.each_with_index do |level, i|
   next if i == 0
   level.each do |target_builder|
-    target_builder.add_dep(":" + levels[i - 1].sample.name)
+    target_builder.add_dep(":" + levels[i - 1].sample.name) if target_builder
   end
 end
 
